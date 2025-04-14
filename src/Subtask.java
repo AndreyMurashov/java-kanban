@@ -1,29 +1,28 @@
 public class Subtask extends Task {
-    private Status status = Status.NEW;
-    private int motherEpic;
+    private int epicId;
 
-    public Subtask(int id, String name, String description){
-        super(id, name, description);
-        this.motherEpic=0;
+    public Subtask(String name, String description, int epicId) {
+        super(name, description);
+        this.epicId = epicId;
     }
 
-    public Subtask(int id, String name, String description, Status status, int motherEpic){
-        super(id, name, description, status);
-        this.motherEpic=motherEpic;
+    public Subtask(String name, String description, int epicId, Status status) {
+        super(name, description, status);
+        this.epicId = epicId;
     }
 
-    public void setMotherEpic(int newMotherEpic){
-        motherEpic = newMotherEpic;
+    public void setEpicId(int newEpicId) {
+        epicId = newEpicId;
     }
 
-    public int getMotherEpic(){
-        return motherEpic;
+    public int getEpicId() {
+        return epicId;
     }
 
     @Override
     public String toString() {
         return "Subtask{" + super.toString() +
-                ", motherEpic=" + motherEpic +
+                ", epicId = " + epicId +
                 '}';
     }
 }
