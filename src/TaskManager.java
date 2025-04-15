@@ -39,11 +39,13 @@ public class TaskManager {
 
     public void createTask(Task task) {
         id = idGenerator();
+        task.setId(id);
         tasks.put(id, task);
         System.out.println("Задача создана и сохранена");
     }
 
-    public void updateTask(int id, Task task) {
+    public void updateTask(Task task) {
+        int id = task.getId();
         tasks.put(id, task);
         System.out.println("Задача изменена");
     }
@@ -85,12 +87,14 @@ public class TaskManager {
 
     public void createEpic(Epic epic) {
         id = idGenerator();
+        epic.setId(id);
         epics.put(id, epic);
         System.out.println("Эпик создан и сохранен");
     }
 
-    public void updateEpic(int id, Epic newEpic) {
+    public void updateEpic(Epic newEpic) {
         // при изменении полей эпика не должны пропасть данные об относящихся к нему подзадачах
+        int id = newEpic.getId();
         Epic oldEpic = epics.get(id);
         ArrayList<Integer> subtaskList = oldEpic.getSubtasks();
         newEpic.transferSubtasks(subtaskList);
@@ -113,7 +117,7 @@ public class TaskManager {
         }
     }
 
-    public void changeEpicStatus(int id) {
+    private void changeEpicStatus(int id) {
         if (!epics.containsKey(id)) {
             System.out.println("Эпик c таким id не найден");
         } else {
@@ -141,7 +145,6 @@ public class TaskManager {
                 epic.setStatus(Status.IN_PROGRESS);
             }
         }
-        System.out.println("Статус эпика изменен");
     }
 
 
@@ -171,15 +174,18 @@ public class TaskManager {
 
     public void createSubtask(Subtask subtask) {
         id = idGenerator();
+        subtask.setId(id);
         subtasks.put(id, subtask);
         int epicID = subtask.getEpicId();
         Epic epic = epics.get(epicID);
         epic.addSubtask(id);
         System.out.println("Подзадача создана и сохранена");
+        changeEpicStatus(epicID);
     }
 
-    public void updateSubtask(int id, Subtask subtask) {
+    public void updateSubtask(Subtask subtask) {
         // отбираем старый и новый статусы для последующего сравнения
+        int id = subtask.getId();
         Subtask oldSubtask = subtasks.get(id);
         Status oldStatus = oldSubtask.getStatus();
         Status newStatus = subtask.getStatus();
@@ -191,12 +197,8 @@ public class TaskManager {
         // изменяем подзадачу
         subtasks.put(id, subtask);
         System.out.println("Подзадача изменена");
-
-        // если статус был изменен посылаем информацию в эпик
-        if (!oldStatus.equals(newStatus)) {
-            int epicId = subtask.getEpicId();
-            changeEpicStatus(epicId);
-        }
+        int epicId = subtask.getEpicId();
+        changeEpicStatus(epicId);
     }
 
     public void deleteSubtaskById(int id) {
@@ -210,6 +212,7 @@ public class TaskManager {
             epic.removeSubtask(id);
             // удаляем саму подзадачу
             subtasks.remove(id);
+            changeEpicStatus(epicId);
         }
         System.out.println("Подзадача удалена");
     }

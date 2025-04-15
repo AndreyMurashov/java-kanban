@@ -37,7 +37,8 @@ public class Main {
         System.out.println(taskManager.getTaskById(1));
 
         Task newTask = new Task("Измененная задача", "с измененным статусом", Status.IN_PROGRESS);
-        taskManager.updateTask(1, newTask);
+        newTask.setId(1);
+        taskManager.updateTask(newTask);
         System.out.println(taskManager.getTaskById(1));
 
         System.out.println("\nИзменяем подзадачи:");
@@ -47,9 +48,11 @@ public class Main {
         System.out.println("6 - " + taskManager.getSubtaskById(6));
 
         Subtask newSubtask = new Subtask("Измененная подзадача № 1", "Статус изменен на DONE", 3, Status.DONE);
-        taskManager.updateSubtask(5, newSubtask);
+        newSubtask.setId(5);
+        taskManager.updateSubtask(newSubtask);
         Subtask newSubtask2 = new Subtask("Измененная подзадача № 2", "Статус изменен на DONE", 3, Status.DONE);
-        taskManager.updateSubtask(6, newSubtask2);
+        newSubtask2.setId(6);
+        taskManager.updateSubtask(newSubtask2);
         System.out.println("\nРезультат - статусы подзадач и эпика изменились:");
         System.out.println("3 - " + taskManager.getEpicById(3));
         System.out.println("5 - " + taskManager.getSubtaskById(5));
