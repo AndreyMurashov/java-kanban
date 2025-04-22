@@ -8,6 +8,9 @@ public class Epic extends Task {
     }
 
     public void addSubtask(int id) {
+        if(super.getId() == id){
+            System.out.println("Задачу нельзя добавить саму в себя");
+        }
         includedSubtasks.add(id);
     }
 

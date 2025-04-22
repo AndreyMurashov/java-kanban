@@ -12,6 +12,9 @@ public class Subtask extends Task {
     }
 
     public void setEpicId(int newEpicId) {
+        if(this.epicId == newEpicId){
+            System.out.println("Задача не может быть присвоена сама себе");
+        }
         epicId = newEpicId;
     }
 
