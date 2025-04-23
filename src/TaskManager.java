@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TaskManager {
-    int idGenerator();
     List<Task> getHistory();
 
     // создание
@@ -12,10 +11,10 @@ public interface TaskManager {
 
 
     // получение всего
-    ArrayList<Task> getAllTasks();
-    ArrayList<Task> getAllEpics();
-    ArrayList<Task> getAllSubtasks();
-    ArrayList<Task> getSubtasksByEpic(int id);
+    List<Task> getAllTasks();
+    List<Task> getAllEpics();
+    List<Task> getAllSubtasks();
+    List<Task> getSubtasksByEpic(int id);
 
     // получение по id
     Task getTaskById(int id);

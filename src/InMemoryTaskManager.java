@@ -1,18 +1,17 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InMemoryTaskManager implements TaskManager {
     private int id = 0;
 
-    HashMap<Integer, Task> tasks = new HashMap<>();
-    HashMap<Integer, Epic> epics = new HashMap<>();
-    HashMap<Integer, Subtask> subtasks = new HashMap<>();
+    Map<Integer, Task> tasks = new HashMap<>();
+    Map<Integer, Epic> epics = new HashMap<>();
+    Map<Integer, Subtask> subtasks = new HashMap<>();
     HistoryManager historyManager = Managers.getDefaultHistory();
 
-
-    @Override
-    public int idGenerator() {
+    private int idGenerator() {
         id++;
         return id;
     }
@@ -20,7 +19,8 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public List<Task> getHistory() {
         List<Task> history = historyManager.getHistory();
-        return history;
+        List<Task> historyForSend = new ArrayList<>(history);
+        return historyForSend;
     }
 
 
@@ -118,7 +118,7 @@ public class InMemoryTaskManager implements TaskManager {
         // при изменении полей эпика не должны пропасть данные об относящихся к нему подзадачах
         int id = newEpic.getId();
         Epic oldEpic = epics.get(id);
-        ArrayList<Integer> subtaskList = oldEpic.getSubtasks();
+        List<Integer> subtaskList = oldEpic.getSubtasks();
         newEpic.transferSubtasks(subtaskList);
         epics.put(id, newEpic);
         System.out.println("Эпик изменен");
@@ -130,7 +130,7 @@ public class InMemoryTaskManager implements TaskManager {
             System.out.println("Эпик c таким id не найден");
         } else {
             // удаляем подзадачи, относящиеся к удаляемому эпику
-            ArrayList<Task> subs = getSubtasksByEpic(id);
+            List<Task> subs = getSubtasksByEpic(id);
             for (Task sub : subs) {
                 int deletedId = sub.getId();
                 subtasks.remove(deletedId);
@@ -148,7 +148,7 @@ public class InMemoryTaskManager implements TaskManager {
             // ищем материнский эпик
             Epic epic = epics.get(id);
             // получаем список дочерних подзадач
-            ArrayList<Integer> epicSubtasks = epic.getSubtasks();
+            List<Integer> epicSubtasks = epic.getSubtasks();
             // собираем статусы подзадач
             ArrayList<Status> stats = new ArrayList<>();
             for (Integer epicSubtask : epicSubtasks) {
@@ -248,9 +248,9 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public ArrayList<Task> getSubtasksByEpic(int id) {
-        ArrayList<Integer> epicSubtasksNumbers = new ArrayList<>();
-        ArrayList<Task> epicSubtasks = new ArrayList<>();
+    public List<Task> getSubtasksByEpic(int id) {
+        List<Integer> epicSubtasksNumbers = new ArrayList<>();
+        List<Task> epicSubtasks = new ArrayList<>();
         if (!epics.containsKey(id)) {
             System.out.println("Эпик c таким id не найден");
         } else {
