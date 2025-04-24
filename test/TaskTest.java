@@ -1,5 +1,4 @@
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 
@@ -7,7 +6,7 @@ class TaskTest {
     Managers managers = new Managers();
     TaskManager taskManager = managers.getDefault();
 
-    // Проверка что экземпляры класса Task равны друг другу, если равен их id
+    // Проверка, что экземпляры класса Task равны друг другу, если равен их id
     @Test
     public void taskEqualTest() {
         Task task = new Task("Задача 1", "Это демонстрационная задача № 1");

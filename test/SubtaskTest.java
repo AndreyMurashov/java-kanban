@@ -16,7 +16,7 @@ class SubtaskTest {
         taskManager.createSubtask(subtask);
     }
 
-    // Проверка что экземпляры класса Subtask равны друг другу, если равен их id
+    // Проверка, что экземпляры класса Subtask равны друг другу, если равен их id
     @Test
     public void subtaskEqualTest() {
         Subtask subtask1 = taskManager.getSubtaskById(subtask.getId());

@@ -7,7 +7,7 @@ class EpicTest {
     Managers managers = new Managers();
     TaskManager taskManager = managers.getDefault();
 
-    // Проверка что экземпляры класса Epic равны друг другу, если равен их id
+    // Проверка, что экземпляры класса Epic равны друг другу, если равен их id
     @Test
     public void epicEqualTest() {
         Epic epic = new Epic("Эпик 1", "Это демонстрационный эпик № 1");
